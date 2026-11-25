@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+        function tourBtn(){
+            alert('확인');
+            const input_data = $('#tourdata').val();
+            console.log('데이터확인 : '+input_data)
+            $.ajax({
+                url:'/tour/aitour_data/',
+                type:'post',
+                headers : {'X-CSRFToken':'{{csrf_token}}'},
+                data : {'data':input_data},
+                dataType : 'json',
+                success:function(data){
+                    // alert(data.data)
+                    $('#textarea').text(data.result)
+
+
+                },
+                fail:function(){
+                    alert('실패')
+
+                }
+
+            })//ajax 통신
+
+        }//tourBtn()
+
+
+    </script>
+    <title>Document</title>
+</head>
+<body>
+    <h3>여행지추천</h3>
+    <label>여행지를 입력하세요 예: 경주,내장산,설악산</label><br>
+    <input type="text" name='tourdata' id="tourdata" placeholder="경주,내장산,설악산">
+    <button type="button" onclick="tourBtn()">검색</button>
+    <br>
+    <label>여행지 설명</label><br>
+    <textarea id="textarea2" name="textarea2" rows="20" cols="100" spellcheck="false"></textarea>
+    <br>
+    <label>여행지 일정</label><br>
+    <textarea id="textarea" name="textarea" rows="20" cols="100" spellcheck="false"></textarea>
+
+</body>
+</html>
